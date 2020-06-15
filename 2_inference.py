@@ -1,7 +1,7 @@
 from os.path import basename, join
 from os import listdir
 import numpy as np
-from efficient.Im_prepro import preprocess_imgs
+from efficient.Im_prepro import preprocess_imgs # the image preprocess package not provided here
 import time 
 import onnxruntime
 
@@ -19,8 +19,8 @@ def image_unit_test(image, onnx_sess):
 
 if __name__ == "__main__":
     
-    onnx_model_path = "./onnx_david/panel.onnx"
-    class_names = {'0':'OK', '1':'NG-WL','2':'NG-BL','3':'NG-SP','4':'NG-LL'}
+    onnx_model_path = "./panel.onnx"
+    #class_names = {'0':'OK', '1':'NG-WL','2':'NG-BL','3':'NG-SP','4':'NG-LL'}
     
     sess = onnxruntime.InferenceSession(onnx_model_path)
     sess.set_providers(['CPUExecutionProvider'])
@@ -30,20 +30,14 @@ if __name__ == "__main__":
     input_shape = sess.get_inputs()[0].shape
     # output
     output_name = sess.get_outputs()[0].name   
+
+    image_dir = "./image_data"
     
-    #image_dir = "efficient/data/0-OK"
-    #image_dir = "efficient/data/1-NG-WL"
-    #image_dir = "efficient/data/2-NG-BL"
-    image_dir = "efficient/data/3-NG-Spot"
-    #image_dir = "efficient/data/4-NG-LL"
-    
-    # data/3-NG-Spot/fine_line_k.bmp 9.8998308e-01 4.3665328e-05 8.0722106e-07 9.9322619e-03 4.0115519e-05
-    # Kera results: 9.8998308e-01 4.3664666e-05 8.0720025e-07 9.9322908e-03 4.0114639e-05 
     
     total_time = 0
     for filename in listdir(image_dir):        
         image_path = join(image_dir, filename)
-        imag_bgr_small, imag_c_small = preprocess_imgs(image_path) #3/24 revised
+        imag_bgr_small, imag_c_small = preprocess_imgs(image_path) 
         tests = imag_c_small.reshape(-1,input_shape[1],input_shape[2],3)
         tests = tests.astype('float32') / 255
         res_class, t = image_unit_test(tests, sess)
