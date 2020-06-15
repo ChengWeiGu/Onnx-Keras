@@ -2,7 +2,6 @@
 
 import time
 import numpy as np
-# import pandas as pd
 import tensorflow as tf
 
 from efficientnet.tfkeras import EfficientNetB0
@@ -45,7 +44,7 @@ class effnet:
         predictions = Dense(units = num_cls, activation="softmax")(Hidden1_in)
         self.model_f = Model(inputs = model.input, outputs = predictions)
         self.model_f.compile(optimizers.Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=1e-08), loss='categorical_crossentropy', metrics=[metrics.mae, metrics.categorical_accuracy])
-        self.model_f.load_weights("efficientnetB0_last.h5")
+        self.model_f.load_weights("efficientnetB0_weights.h5")
         # self.model_f.summary()
         # print(self.model_f.name)
         
@@ -54,7 +53,7 @@ if __name__ == '__main__':
 
     net = effnet()
     
-    save_model_file = "panel_5cls.onnx"
+    save_model_file = "panel.onnx"
     model = net.model_f
     # print(model.inputs)
     onnx_model = keras2onnx.convert_keras(model, model.name)
