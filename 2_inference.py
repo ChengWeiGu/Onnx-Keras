@@ -6,11 +6,11 @@ import time
 import onnxruntime
 
 def image_unit_test(image, onnx_sess):
-    #test_predictions = self.model_f.predict(tests)
+    
     t0 = time.time()
     test_predictions = onnx_sess.run([output_name], {input_name: image})[0]
     t = time.time() - t0
-    #print(test_predictions)
+    
     y_test_pre = np.argmax(test_predictions,axis = 1)
     res_class = class_names[str(y_test_pre[0])] #3/24 added
     print("the img name: {}; the predicted class: {}".format(basename(image_path),res_class)) #3/24 added
@@ -20,7 +20,7 @@ def image_unit_test(image, onnx_sess):
 if __name__ == "__main__":
     
     onnx_model_path = "./panel.onnx"
-    #class_names = {'0':'OK', '1':'NG-WL','2':'NG-BL','3':'NG-SP','4':'NG-LL'}
+    class_names = {'0':'OK', '1':'NG-WL','2':'NG-BL','3':'NG-SP','4':'NG-LL'}
     
     sess = onnxruntime.InferenceSession(onnx_model_path)
     sess.set_providers(['CPUExecutionProvider'])
