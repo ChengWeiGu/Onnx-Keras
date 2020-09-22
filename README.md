@@ -31,5 +31,9 @@ python 2_inference.py
 
 In this case, the efficientnetB0 is utilized.   
 
+## Run the merged script:  
+one can run the merged version of onnx from convertion to inference by    
+python keras_onnx.py
+
 
 
