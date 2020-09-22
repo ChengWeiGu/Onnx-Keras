@@ -1,0 +1,7 @@
+tensorflow-gpu==2.1.0
+tensorflow==1.14.0
+keras==2.2.4
+keras2onnx==1.7.0
+onnxruntime==1.2.0
+cudnn==7.6.5
+efficientnet==1.1.0
