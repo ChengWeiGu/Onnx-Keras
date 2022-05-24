@@ -1,4 +1,4 @@
-tensorflow-gpu==2.1.0
+tensorflow-gpu==2.6.4
 tensorflow==1.14.0
 keras==2.2.4
 keras2onnx==1.7.0
